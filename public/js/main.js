@@ -16,17 +16,18 @@ submitButton.addEventListener("click", async function(event) {
         return;
     }
 
+    const formData = new FormData()
+    formData.append("title", title)
+    formData.append("description", description)
+    formData.append("price", price)
+    if (image) {
+        formData.append("image", image)
+    }
+
     const itemData = await fetch("http://localhost:3000/upload", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            title,
-            description,
-            price,
-        })
-    });
+        body: formData,
+    })
 
     const offersJson = await itemData.json();
     console.log(offersJson);

@@ -38,7 +38,8 @@ const mongoose_1 = __importStar(require("mongoose"));
 let offerSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    price: { type: Number, required: true }
+    price: { type: Number, required: true },
+    imageId: { type: String, ref: 'Image' }
 });
 const Offer = mongoose_1.default.model("Offer", offerSchema);
 exports.Offer = Offer;

@@ -1,32 +1,38 @@
 import {Request, Response, Router} from "express"
 import {compile} from "morgan"
 import {Offer, IOffer} from '../models/Offer'
+import Image from '../models/Image'
+import upload from '../middleware/uploadImage'
 
 const router: Router = Router()
 
-router.post("/upload", async (req: Request, res: Response) => {
+router.post("/upload", upload.single("image"), async (req: Request, res: Response) => {
     try {
         const {title, description, price} = req.body
-
-        console.log("Title Type: ", typeof(title), "Title: ", title);
-        console.log("Description Type: ", typeof(description), "Description: ", description);
-        console.log("Price Type: ", typeof(price), "Price: ", price);
-        
+        //had a bit of debugging situation       
         if (!title || !description || isNaN(price)) {
             console.log( res.status(400).json({ error: "Invalid input data" }));
         }
 
-        const offer: IOffer = new Offer({ 
+        const offerData: any = { 
             title,
             description,
             price: parseFloat(price)
-        })
-        console.log(req.body)
-        console.log(typeof(title))
-        console.log(typeof(description))
-        console.log(typeof(price))
+        }
+
+        if(req.file) {
+            const {filename, path} = req.file
+
+            const image = new Image({
+                filename,
+                path: `public/images/${filename}`
+            })
+            await image.save()
+
+            offerData.imageId = image._id
+        }
+        const offer = new Offer(offerData)
         await offer.save()
-        console.log("offer saved")
         res.status(201).json({ message: "Offer save successfully", body: req.body})
     } catch (error: any) {
         if (error.name === 'ValidationError') {

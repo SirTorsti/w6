@@ -1,28 +1,36 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const Offer_1 = require("../models/Offer");
+const Image_1 = __importDefault(require("../models/Image"));
+const uploadImage_1 = __importDefault(require("../middleware/uploadImage"));
 const router = (0, express_1.Router)();
-router.post("/upload", async (req, res) => {
+router.post("/upload", uploadImage_1.default.single("image"), async (req, res) => {
     try {
         const { title, description, price } = req.body;
-        console.log("Title Type: ", typeof (title), "Title: ", title);
-        console.log("Description Type: ", typeof (description), "Description: ", description);
-        console.log("Price Type: ", typeof (price), "Price: ", price);
+        //had a bit of debugging situation       
         if (!title || !description || isNaN(price)) {
             console.log(res.status(400).json({ error: "Invalid input data" }));
         }
-        const offer = new Offer_1.Offer({
+        const offerData = {
             title,
             description,
             price: parseFloat(price)
-        });
-        console.log(req.body);
-        console.log(typeof (title));
-        console.log(typeof (description));
-        console.log(typeof (price));
+        };
+        if (req.file) {
+            const { filename, path } = req.file;
+            const image = new Image_1.default({
+                filename,
+                path: `public/images/${filename}`
+            });
+            await image.save();
+            offerData.imageId = image._id;
+        }
+        const offer = new Offer_1.Offer(offerData);
         await offer.save();
-        console.log("offer saved");
         res.status(201).json({ message: "Offer save successfully", body: req.body });
     }
     catch (error) {
