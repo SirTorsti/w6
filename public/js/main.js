@@ -1,4 +1,4 @@
-submitButton.addEventListener("click", async function(event) {
+submitButton.addEventListener("submit", async function(event) {
     event.preventDefault();
     
     const title = document.getElementById("title").value;
@@ -33,7 +33,7 @@ submitButton.addEventListener("click", async function(event) {
     console.log(offersJson);
 });
 
-async function fetchOffer() {
+/*async function fetchOffer() {
     const response = await fetch("http://localhost:3000/offers")
     const offers = await response.json()
     const offerContainer = document.getElementById("offersContainer")
@@ -42,6 +42,5 @@ async function fetchOffer() {
     offers.forEach((offer) => {
         const offerDiv = document.createElement("div")
         offerDiv.classList.add("offerDiv")
-    })
-    
-}
+    }) 
+} */

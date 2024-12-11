@@ -44,7 +44,7 @@ router.post("/upload", upload.single("image"), async (req: Request, res: Respons
     }
 }) 
 
-router.get("/offers", async (req: Request, res: Response) => {
+/*router.get("/offers", async (req: Request, res: Response) => {
     try {
         const offers = await Offer.find().populate({
             path: "imageId",
@@ -63,6 +63,6 @@ router.get("/offers", async (req: Request, res: Response) => {
     } catch(error: any) {
         res.status(500).json({error: error.message})
     }
-})
+}) */
 
 export default router

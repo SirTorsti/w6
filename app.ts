@@ -23,5 +23,5 @@ app.use(express.static(path.join(__dirname, "../public")))
 app.use("/", router)
 
 app.listen(port, () => {
-    console.log(`server running on port ${port}`) 
+    console.log(`server running on port ${port}`)  
 })
