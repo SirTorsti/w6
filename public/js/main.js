@@ -1,4 +1,4 @@
-submitButton.addEventListener("submit", async function(event) {
+offerForm.addEventListener("submit", async function(event) {
     event.preventDefault();
     
     const title = document.getElementById("title").value;
