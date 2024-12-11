@@ -32,3 +32,16 @@ submitButton.addEventListener("click", async function(event) {
     const offersJson = await itemData.json();
     console.log(offersJson);
 });
+
+async function fetchOffer() {
+    const response = await fetch("http://localhost:3000/offers")
+    const offers = await response.json()
+    const offerContainer = document.getElementById("offersContainer")
+    offerContainer.innerHTML=""
+
+    offers.forEach((offer) => {
+        const offerDiv = document.createElement("div")
+        offerDiv.classList.add("offerDiv")
+    })
+    
+}
