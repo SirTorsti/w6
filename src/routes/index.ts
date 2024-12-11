@@ -11,8 +11,12 @@ router.post("/upload", async (req: Request, res: Response) => {
         console.log("Title Type: ", typeof(title), "Title: ", title);
         console.log("Description Type: ", typeof(description), "Description: ", description);
         console.log("Price Type: ", typeof(price), "Price: ", price);
+        
+        if (!title || !description || isNaN(price)) {
+            console.log( res.status(400).json({ error: "Invalid input data" }));
+        }
 
-        const offer: IOffer = new Offer({
+        const offer: IOffer = new Offer({ 
             title,
             description,
             price: parseFloat(price)
@@ -25,8 +29,12 @@ router.post("/upload", async (req: Request, res: Response) => {
         console.log("offer saved")
         res.status(201).json({ message: "Offer save successfully", body: req.body})
     } catch (error: any) {
-        console.error(error)
-        res.status(500).json({error: "Internal server error"})
+        if (error.name === 'ValidationError') {
+            console.error("Validation Error:", error.errors);
+        } else {
+            console.error("Error:", error);
+        }
+        res.status(500).json({ error: error.message || "Internal server error" });
     }
 }) 
 
