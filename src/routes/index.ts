@@ -6,17 +6,19 @@ const router: Router = Router()
 
 router.post("/upload", async (req: Request, res: Response) => {
     try {
-        const existingOffers: IOffer | null = await Offer.findOne({offer: req.body.offer})
+        const {title, description, price} = req.body
 
         const offer: IOffer = new Offer({
-            title: req.body.title,
-            descripton: req.body.description,
-            price: req.body.number
+            title,
+            description,
+            price: parseFloat(price)
         })
         await offer.save()
         console.log("offer saved")
+        res.status(201).json({ message: "Offer save successfully"})
     } catch (error: any) {
         console.error(error)
+        res.status(500).json({error: "Internal server error"})
     }
 }) 
 
