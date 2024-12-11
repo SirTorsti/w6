@@ -7,7 +7,7 @@ submitButton.addEventListener("click", async function(event) {
 
     if(!title || !description || isNaN(price)) {
         console.error("Invalid input data")
-        alert("homo")
+        alert("Massiivinen virhe tapahtunut")
         return
     }
 
