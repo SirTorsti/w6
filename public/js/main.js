@@ -1,9 +1,10 @@
 const submitButton = document.getElementById("submitButton")
 submitButton.addEventListener("click", async function(event) {
     event.preventDefault();
-    const title = document.getElementById("title").value.trim()
-    const description = document.getElementById("description").value.trim()
-    const price = document.getElementById("price").value.trim()
+    const title = document.getElementById("title").value
+    const description = document.getElementById("description").value
+    const price = parseFloat(document.getElementById("price").value)
+    const image = document.getElementById("image").files[0]
 
     if(!title || !description || isNaN(price)) {
         console.error("Invalid input data")
