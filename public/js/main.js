@@ -43,10 +43,12 @@ async function fetchOffer() {
         const offerDiv = document.createElement("div")
         offerDiv.classList.add("offerDiv")
 
+        if(offer.image) {
         const img = document.createElement("img")
         img.src = offer.image
         img.alt = offer.title
         offerDiv.appendChild(img)
+        } 
         
         const titleElement = document.createElement("p")
         titleElement.textContent = `Title: ${offer.title}`

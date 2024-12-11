@@ -51,6 +51,8 @@ router.get("/offers", async (req: Request, res: Response) => {
             select: "filename path -_id"
         });
 
+        console.log(offers)
+
         const offerList = offers.map((offer) => ({
             id: offer._id,
             title: offer.title,
