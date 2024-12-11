@@ -31,16 +31,36 @@ offerForm.addEventListener("submit", async function(event) {
 
     const offersJson = await itemData.json();
     console.log(offersJson);
+    fetchOffer()
 });
 
-/*async function fetchOffer() {
+async function fetchOffer() {
     const response = await fetch("http://localhost:3000/offers")
     const offers = await response.json()
-    const offerContainer = document.getElementById("offersContainer")
-    offerContainer.innerHTML=""
+    const offerContainer = document.getElementById("offerContainer")
 
     offers.forEach((offer) => {
         const offerDiv = document.createElement("div")
         offerDiv.classList.add("offerDiv")
+
+        const img = document.createElement("img")
+        img.src = offer.image
+        img.alt = offer.title
+        offerDiv.appendChild(img)
+        
+        const titleElement = document.createElement("p")
+        titleElement.textContent = `Title: ${offer.title}`
+        offerDiv.appendChild(titleElement)
+
+        const desc = document.createElement("p")
+        desc.textContent = `Description: ${offer.description}`
+        offerDiv.appendChild(desc)
+
+        const priceElement = document.createElement("p")
+        priceElement.textContent = `Price: ${offer.price}`
+        offerDiv.appendChild(priceElement)
+
+        offerContainer.appendChild(offerDiv)
     }) 
-} */
+} 
+fetchOffer()

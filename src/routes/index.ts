@@ -1,7 +1,7 @@
 import {Request, Response, Router} from "express"
 import {compile} from "morgan"
 import {Offer, IOffer} from '../models/Offer'
-import Image from '../models/Image'
+import Image, {IImage} from '../models/Image'
 import upload from '../middleware/uploadImage'
 
 const router: Router = Router()
@@ -44,25 +44,25 @@ router.post("/upload", upload.single("image"), async (req: Request, res: Respons
     }
 }) 
 
-/*router.get("/offers", async (req: Request, res: Response) => {
+router.get("/offers", async (req: Request, res: Response) => {
     try {
         const offers = await Offer.find().populate({
             path: "imageId",
             select: "filename path -_id"
-        })
+        });
 
         const offerList = offers.map((offer) => ({
             id: offer._id,
             title: offer.title,
             description: offer.description,
             price: offer.price,
-            image: offer.imageId ? `/images/${offer.imageId}` : null
+            image: offer.imageId ? `/images/${offer.imageId.filename}` : null
         }))
 
         res.status(200).json(offerList)
     } catch(error: any) {
         res.status(500).json({error: error.message})
     }
-}) */
+}) 
 
 export default router

@@ -5,11 +5,12 @@ interface IImage extends Document {
     path: string
 }
 
-let imageSchema: Schema = new Schema ({
+let imageSchema: Schema = new Schema<IImage>({
     filename: {type: String, required: true},
     path: {type: String, required: true}
 })
 
 const Image = mongoose.model<IImage>('Image', imageSchema)
 
+export {IImage}
 export default Image

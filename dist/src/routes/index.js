@@ -43,24 +43,23 @@ router.post("/upload", uploadImage_1.default.single("image"), async (req, res) =
         res.status(500).json({ error: error.message || "Internal server error" });
     }
 });
-/*router.get("/offers", async (req: Request, res: Response) => {
+router.get("/offers", async (req, res) => {
     try {
-        const offers = await Offer.find().populate({
+        const offers = await Offer_1.Offer.find().populate({
             path: "imageId",
             select: "filename path -_id"
-        })
-
+        });
         const offerList = offers.map((offer) => ({
             id: offer._id,
             title: offer.title,
             description: offer.description,
             price: offer.price,
-            image: offer.imageId ? `/images/${offer.imageId}` : null
-        }))
-
-        res.status(200).json(offerList)
-    } catch(error: any) {
-        res.status(500).json({error: error.message})
+            image: offer.imageId ? `/images/${offer.imageId.filename}` : null
+        }));
+        res.status(200).json(offerList);
     }
-}) */
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 exports.default = router;
